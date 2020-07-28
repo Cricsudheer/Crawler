@@ -1,0 +1,22 @@
+
+
+{% extends 'crawler/base.html' %}
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>nothing</title>-->
+<!--</head>-->
+<!--<body>-->
+{% block body_block %}
+<div class ="container">
+    <form method = "POST" action="{% url 'crawler:searchform' %}">
+        {{form.as_table}}
+        {% csrf_token %}
+        <input type = "submit" class="btn btn-primary" value="Submit" >
+    </form>
+</div>
+{% endblock %}
+
+<!--</body>-->
+<!--</html>-->

@@ -1,0 +1,65 @@
+
+{% extends 'crawler/searchpage.html' %}
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>nothing</title>-->
+<!--</head>-->
+<!--<body>-->
+{% block body_block %}
+  <h4>candidates data </h4>
+  <table style="display: inline-block;" >
+    {% for i in conno  %}
+        <tr>
+            <td><b>{{i}}</b></td>
+
+        </tr>
+    {% endfor %}
+</table>
+<table style="display: inline-block;">
+    {% for j in connane %}
+        <tr>
+            <td>{{j}}</td>
+
+        </tr>
+    {% endfor %}
+</table>
+<table style="display: inline-block;" >
+    {% for i in rank  %}
+        <tr>
+            <td>{{i}}</td>
+
+        </tr>
+    {% endfor %}
+</table>
+<table style="display: inline-block;" >
+    {% for i in solved   %}
+        <tr>
+            <td>{{i}}</td>
+
+        </tr>
+    {% endfor %}
+</table>
+<table style="display: inline-block;" >
+    {% for i in rating_ch   %}
+        <tr>
+            <td>{{i}}</td>
+
+        </tr>
+    {% endfor %}
+</table>
+<table style="display: inline-block;" >
+    {% for i in new_rati  %}
+        <tr>
+            <td>{{i}}</td>
+
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
+
+
+<!--</body>-->
+<!--</html>-->
