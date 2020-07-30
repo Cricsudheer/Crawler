@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
-    return render(request,'crawler/index.html',{})
+    return render(request,'crawler/index.html')
 
 @login_required
 def special(request):
@@ -20,6 +20,26 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('crawler : index'))
 
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('crawler: index'))
+
+            else:
+                return HttpResponse("inactive")
+        else:
+            return HttpResponse("Someone tried to login and failed")
+    else:
+
+        return render(request, 'crawler/login.html')   
 
 
 def search_form_view(request):
@@ -96,27 +116,6 @@ def person(request, handle):
         'new_rati': new_rati,
     }
     return render(request,'crawler/demo.html',rating_stuff)
-
-def user_login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = authenticate(username=username, password=password)
-
-        if user:
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect(reverse('crawler: index'))
-
-            else:
-                return HttpResponse("inactive")
-        else:
-            return HttpResponse("Someone tried to login and failed")
-    else:
-
-        return render(request, 'crawler/login.html', {})
-
 
 
 def register(request):
