@@ -18,7 +18,7 @@ def special(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('crawler : index'))
+    return HttpResponseRedirect(reverse('crawler:index'))
 
 
 def user_login(request):
@@ -31,7 +31,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('crawler: index'))
+                return HttpResponseRedirect(reverse('crawler:index'))
 
             else:
                 return HttpResponse("inactive")
@@ -39,7 +39,7 @@ def user_login(request):
             return HttpResponse("Someone tried to login and failed")
     else:
 
-        return render(request, 'crawler/login.html')   
+        return render(request, 'crawler/login.html', {})   
 
 
 def search_form_view(request):
