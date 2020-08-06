@@ -1,10 +1,12 @@
 from django.shortcuts import render , redirect, HttpResponse
-from . import forms
 from crawler.forms import UserProfileInfoForm,UserForm
 from django.contrib.auth import authenticate, login ,logout
 from django.http import HttpResponseRedirect,HttpResponse
-from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.urls import reverse
+from . import forms
 
 # Create your views here.
 def index(request):
@@ -119,31 +121,47 @@ def person(request, handle):
 
 
 def register(request):
-
-    registered =  False
-    if request.method=="POST":
-        user_form = UserForm(data = request)
-        profile_form=UserProfileInfoForm(data=request.POST)
-
-        if user_form.is_valid() and  profile_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-
-            profile = profile_form.save(commit= False)
-            profile.user= user
-
-            profile.save()
+    registered = False
+    if request.method=='POST':
+        form=UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username=form.cleaned_data.get('username')
+            rawpassword=form.cleaned_data.get('password1')
+            user = authenticate(username=username,password=rawpassword)
+            login(request,user)
             registered = True
-        else:
-            print(user_form.errors,profile_form.erros)
-    else:
-        user_form = UserForm()
-        profile_form= UserProfileInfoForm()
+            return redirect('crawler/')
 
-    return render(request,'crawler/registration.html',
-                  {'user_form':user_form},
-                  {'profile_form': profile_form},
-                  {'registered':registered})
+
+    else:
+        form=UserCreationForm()
+        return render(request, 'crawler/registration.html',{'form':form,'registered':registered})
+
+    # registered =  False
+    # if request.method=="POST":
+    #     user_form = UserForm(data = request.POST)
+    #     profile_form=UserProfileInfoForm(data=request.POST)
+
+    #     if user_form.is_valid() and  profile_form.is_valid():
+    #         user = user_form.save()
+    #         user.set_password(user.password)
+    #         user.save()
+
+    #         profile = profile_form.save(commit= False)
+    #         profile.user= user
+
+    #         profile.save()
+    #         registered = True
+    #         user=authenticate(user=user,profile=profile)
+    #         login(request,user)
+    #         return redirect('')
+    #     else:
+    #         print(user_form.errors,profile_form.errors)
+    # else:
+    #     user_form = UserForm()
+    #     profile_form= UserProfileInfoForm()
+
+    # return render(request,'crawler/registration.html',{'user_form':user_form,'profile_form': profile_form,'registered':registered})
 
 
