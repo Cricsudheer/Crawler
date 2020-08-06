@@ -2,13 +2,15 @@
 <div class="jumbotron">
     {% if registered %}
       <h1>U are  registered now !</h1>
+      <a href="{% url 'crawler/' %}">Go back to the main page.</a>
     {% else %}
     <h3>Fill out the Form:</h3>
 
-    <form method="POST" >
+    <form method="POST" action="">
         {% csrf_token %}
-        {{user_form.as_p}}
-        {{profile_form.as_p}}
+        {{form.as_p}}
+        <!-- {{profile_form.as_p}} -->
         <input type="submit" value="Register">
     </form>
+    {% endif %}
 </div>

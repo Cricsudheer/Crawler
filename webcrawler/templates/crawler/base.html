@@ -25,11 +25,11 @@
     </li>
     {% if user.is_authenticated %}
      <li class="nav-item">
-      <a class="nav-link" href="{%url 'crawler  : logout'%}">Log Out</a>
+      <a class="nav-link" href="{% url 'crawler:logout' %}">Log Out</a>
     </li>
     {% else %}
      <li class="nav-item">
-      <a class="nav-link" href="{%url 'crawler : user_login'%}">Login</a>
+      <a class="nav-link" href="{% url 'crawler:user_login' %}">Login</a>
     {% endif %}
     </li>
 
@@ -54,5 +54,7 @@
 </div>
 {% endblock %}
 
+{% block content %}
+{% endblock %}
 </body>
 </html>
